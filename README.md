@@ -16,37 +16,36 @@ Compatible with **C++98**, making it suitable for legacy and modern environments
 
 ## Installation
 
-Clone the repository and prepare the library using the provided `init.sh` script.
+### Include source
 
-### 1. Clone the repository
-
-```bash
-git clone <repository_url>
-cd <repository_folder>
-```
-
-### 2. Initialize the library
-
-`init.sh` provides three modes:
-
-- `-include_src`: Keep only `include/` and `src/` folders and replace the root Makefile with the C++ version.
-- `-build_only`: Same as `-include_src` but also compiles the library and keeps `build/`.
-- `-python`: Placeholder for future Python integration (currently prints `"Not implemented yet."`).
-
-#### Examples:
+### 1. Execute this command inside your project directory
 
 ```bash
-# Include only source
+git clone https://github.com/LuisGrigore/cpp-tabulizer.git
+cd cpp-tabulizer
 ./tools/initializer/init.sh -include_src
-
-# Include source and compile
-./tools/initializer/init.sh -build_only
-
-# Python support (not implemented)
-./tools/initializer/init.sh -python
+cd ..
 ```
 
-After `-build_only`, the compiled library will be in `build/lib/libtabulizer.a`.
+### 2. Link the library Makefile to your projects build system
+
+### 3. Link `build/lib/libtabulizer.a` in your project compilation
+
+### Built only
+
+### 1. Execute this command inside your project directory
+
+```bash
+git clone https://github.com/LuisGrigore/cpp-tabulizer.git
+cd cpp-tabulizer
+./tools/initializer/init.sh -build_only
+cd ..
+```
+### 3. Link `build/lib/libtabulizer.a` in your project compilation
+
+### Python
+
+### Not yet supported
 
 ---
 
@@ -54,13 +53,13 @@ After `-build_only`, the compiled library will be in `build/lib/libtabulizer.a`.
 
 | Style                  | Example |
 |------------------------|---------|
-| `ascii()`              | `+---+---+\n|   |   |\n+---+---+` |
-| `unicode()`            | `┌───┬───┐\n│   │   │\n└───┴───┘` |
-| `unicodeRounded()`     | `╭───╮╭───╮\n│   │ │   │\n╰───╯╰───╯` |
-| `unicodeDouble()`      | `╔═══╦═══╗\n║   ║   ║\n╚═══╩═══╝` |
-| `unicodeBold()`        | `▛▀▀▀▜▛▀▀▀▜\n▌   ▐ ▌   ▐\n▙▄▄▄▟▙▄▄▄▟` |
-| `unicodeDashed()`      | `┌─ ─┬─ ─┐\n│   │   │\n└─ ─┴─ ─┘` |
-| `minimal()`            | `- -\n | |\n- -` |
+| `ascii()`              | `+---+---+|   |   |+---+---+` |
+| `unicode()`            | `┌───┬───┐│   │   │└───┴───┘` |
+| `unicodeRounded()`     | `╭───╮╭───╮│   │ │   │╰───╯╰───╯` |
+| `unicodeDouble()`      | `╔═══╦═══╗║   ║   ║╚═══╩═══╝` |
+| `unicodeBold()`        | `▛▀▀▀▜▛▀▀▀▜▌   ▐ ▌   ▐▙▄▄▄▟▙▄▄▄▟` |
+| `unicodeDashed()`      | `┌─ ─┬─ ─┐│   │   │└─ ─┴─ ─┘` |
+| `minimal()`            | `- - | |- -` |
 
 > These examples are simplified. Actual rendering may vary depending on terminal font and Unicode support.
 
@@ -206,23 +205,3 @@ int main() {
 
 ---
 
-## Build Instructions
-
-1. Clone the repository:
-
-```bash
-git clone <repository_url>
-cd <repository_folder>
-```
-
-2. Initialize the library:
-
-```bash
-# Keep only include/src
-./tools/initializer/init.sh -include_src
-
-# Compile and keep build folder
-./tools/initializer/init.sh -build_only
-```
-
-3. Link `build/lib/libtabulizer.a` in your project or examples.
