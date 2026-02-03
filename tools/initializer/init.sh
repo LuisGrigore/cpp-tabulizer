@@ -1,25 +1,25 @@
 #!/bin/bash
 # =====================================================
-# init.sh - Script de inicialización de la librería
+# init.sh - Library initialization script
 # =====================================================
 
-# Comprobar que se pasó un argumento
+# Check that exactly one argument was passed
 if [ $# -ne 1 ]; then
-    echo "Uso: $0 [-include_src | -build_only | -python]"
+    echo "Usage: $0 [-include_src | -build_only | -python]"
     exit 1
 fi
 
 ARG=$1
 
-# Obtener rutas
+# Paths
 ROOT_DIR=$(pwd)
 TOOLS_DIR="$ROOT_DIR/tools/initializer"
 CPP_MAKEFILE="$TOOLS_DIR/cpp/Makefile"
 ROOT_MAKEFILE="$ROOT_DIR/Makefile"
 
-# Función para limpiar todo excepto include y src
+# Function to clean everything except include and src
 clean_except_include_src() {
-    echo "Limpiando proyecto, dejando solo include/* y src/*..."
+    echo "Cleaning project, keeping only include/* and src/*..."
     find . -mindepth 1 ! -regex './include\(/.*\)?' \
                      ! -regex './src\(/.*\)?' \
                      ! -name "init.sh" \
@@ -27,67 +27,67 @@ clean_except_include_src() {
                      -exec rm -rf {} +
 }
 
-# Función para limpiar todo excepto include y build
+# Function to clean everything except include and build
 clean_except_include_build() {
-    echo "Limpiando proyecto, dejando solo include/* y build/*..."
+    echo "Cleaning project, keeping only include/* and build/*..."
     find . -mindepth 1 ! -regex './include\(/.*\)?' \
                      ! -regex './build\(/.*\)?' \
                      -exec rm -rf {} +
-	rm -rf ./build/obj
+    rm -rf ./build/obj
 }
 
 case "$ARG" in
     -python)
-        echo "Not implemented yet."
+        echo "Not supported."
         ;;
 
     -include_src)
-        echo "Preparando proyecto para incluir solo src e include..."
+        echo "Preparing project to include only src and include..."
 
-        # Sustituir makefile
+        # Replace Makefile
         if [ -f "$CPP_MAKEFILE" ]; then
-            echo "Copiando Makefile de cpp..."
+            echo "Copying C++ Makefile..."
             cp "$CPP_MAKEFILE" "$ROOT_MAKEFILE"
         else
-            echo "Error: Makefile de cpp no encontrado en $CPP_MAKEFILE"
+            echo "Error: C++ Makefile not found at $CPP_MAKEFILE"
             exit 1
         fi
 
-        # Limpiar todo excepto include/*, src/* y Makefile
+        # Clean everything except include/*, src/*, and Makefile
         clean_except_include_src
-        echo "Hecho."
+        echo "Done."
         ;;
 
     -build_only)
-        echo "Preparando proyecto para build_only..."
+        echo "Preparing project for build_only..."
 
-        # Sustituir makefile
+        # Replace Makefile
         if [ -f "$CPP_MAKEFILE" ]; then
-            echo "Copiando Makefile de cpp..."
+            echo "Copying C++ Makefile..."
             cp "$CPP_MAKEFILE" "$ROOT_MAKEFILE"
         else
-            echo "Error: Makefile de cpp no encontrado en $CPP_MAKEFILE"
+            echo "Error: C++ Makefile not found at $CPP_MAKEFILE"
             exit 1
         fi
 
-        # Limpiar todo excepto include/* y src/*
+        # Clean everything except include/* and src/*
         clean_except_include_src
 
-        # Ejecutar make
-        echo "Ejecutando make..."
+        # Run make
+        echo "Running make..."
         if make; then
-            echo "Compilación correcta. Limpiando todo excepto include/* y build/*..."
+            echo "Build successful. Cleaning everything except include/* and build/*..."
             clean_except_include_build
-            echo "Hecho."
+            echo "Done."
         else
-            echo "Error: la compilación falló."
+            echo "Error: build failed."
             exit 1
         fi
         ;;
 
     *)
-        echo "Opción no reconocida: $ARG"
-        echo "Uso: $0 [-include_src | -build_only | -python]"
+        echo "Unrecognized option: $ARG"
+        echo "Usage: $0 [-include_src | -build_only | -python]"
         exit 1
         ;;
 esac

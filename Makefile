@@ -27,7 +27,6 @@ LIB_TARGET = $(LIB_DIR)/lib$(NAME).a
 EXAMPLES_SRCS = \
 	examples/example00.cpp \
 
-# Obtener nombres de ejecutables (basename sin extensión)
 EXAMPLES_BINS = $(patsubst examples/%.cpp,$(BIN_DIR)/%,$(EXAMPLES_SRCS))
 
 # ===== Rules =====
