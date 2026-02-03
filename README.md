@@ -23,7 +23,7 @@ Compatible with **C++98**, making it suitable for legacy and modern environments
 ```bash
 git clone https://github.com/LuisGrigore/cpp-tabulizer.git
 cd cpp-tabulizer
-./tools/initializer/init.sh -include_src
+bash ./tools/initializer/init.sh -include_src
 cd ..
 ```
 
@@ -39,7 +39,7 @@ cd ..
 ```bash
 git clone https://github.com/LuisGrigore/cpp-tabulizer.git
 cd cpp-tabulizer
-./tools/initializer/init.sh -build_only
+bash ./tools/initializer/init.sh -build_only
 cd ..
 ```
 2. Link `build/lib/libtabulizer.a` in your project compilation
