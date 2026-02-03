@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 05:12:38 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 05:12:50 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:14:53 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,38 @@ std::string StaticTabulizer::getIntersectionChar(
   const bool left = intersectionMask & Cell::INTERSECTION_HAS_LEFT;
   const bool right = intersectionMask & Cell::INTERSECTION_HAS_RIGHT;
 
-  // 4 direcciones
   if (top && bottom && left && right) return borderStyle.cross;  // ┼
 
-  // 3 direcciones
-  if (top && bottom && left) return borderStyle.rightT;    // ┤
-  if (top && bottom && right) return borderStyle.leftT;  // ├
-  if (left && right && bottom) return borderStyle.bottomT;   // ┬
-  if (left && right && top) return borderStyle.topT;   // ┴
+  if (top && bottom && left) return borderStyle.rightT;     // ┤
+  if (top && bottom && right) return borderStyle.leftT;     // ├
+  if (left && right && bottom) return borderStyle.bottomT;  // ┬
+  if (left && right && top) return borderStyle.topT;        // ┴
 
-  // 2 direcciones (esquinas)
   if (bottom && right) return borderStyle.topLeft;  // ┌
   if (bottom && left) return borderStyle.topRight;  // ┐
   if (top && right) return borderStyle.bottomLeft;  // └
   if (top && left) return borderStyle.bottomRight;  // ┘
 
-  // 1 dirección
   if (top || bottom) return borderStyle.vertical;    // │
   if (left || right) return borderStyle.horizontal;  // ─
 
   return " ";
 }
 
-StaticTabulizer::Cell::IntersectionMask StaticTabulizer::getCornerIntersectionMask(
-    unsigned int row, unsigned int col, Cell::Corner corner) {
+StaticTabulizer::Cell::IntersectionMask
+StaticTabulizer::getCornerIntersectionMask(unsigned int row, unsigned int col,
+                                           Cell::Corner corner) {
   Cell::IntersectionMask mask = 0;
 
   switch (corner) {
     case Cell::TOP_LEFT:
       mask |= cells[row][col].getIntersectionMask(Cell::TOP_LEFT);
 
-      if (col > 0) mask |= cells[row][col - 1].getIntersectionMask(Cell::TOP_RIGHT);
+      if (col > 0)
+        mask |= cells[row][col - 1].getIntersectionMask(Cell::TOP_RIGHT);
 
-      if (row > 0) mask |= cells[row - 1][col].getIntersectionMask(Cell::BOTTOM_LEFT);
+      if (row > 0)
+        mask |= cells[row - 1][col].getIntersectionMask(Cell::BOTTOM_LEFT);
 
       if (row > 0 && col > 0)
         mask |= cells[row - 1][col - 1].getIntersectionMask(Cell::BOTTOM_RIGHT);

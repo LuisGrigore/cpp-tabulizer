@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 04:20:59 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 04:21:19 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:11:29 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,25 @@ enum VAlign {
   V_ALIGN_BOTTOM,
 };
 
+struct CellOptions {
+  LetterCase letterCase;
+  HAlign hAlign;
+  VAlign vAlign;
+  BorderMask border;
+
+  CellOptions()
+      : letterCase(LETTER_CASE_DEFAULT),
+        hAlign(H_ALIGN_CENTER),
+        vAlign(V_ALIGN_CENTER),
+        border(BORDER_NONE) {}
+};
+
 class ITabulizer {
  public:
   virtual ~ITabulizer() {};
-  virtual void setCell(const unsigned int row, const unsigned int col,
-                       const std::string content, const LetterCase letterCase,
-                       const HAlign horizontalAlignment,
-                       const VAlign verticalAlignment,
-                       const BorderMask border) = 0;
+  virtual void setCell(unsigned int row, unsigned int col,
+                       const std::string& content,
+                       const CellOptions& options = CellOptions()) = 0;
   virtual void display() = 0;
 };
 

@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:49:32 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 05:17:33 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:12:07 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ StaticTabulizer::Cell::Cell(const Cell& other)
 StaticTabulizer::Cell::~Cell() {}
 
 StaticTabulizer::Cell::Cell(const std::string& content_, BorderMask borderMask_,
-           LetterCase letterCase_, VAlign verticalAlignment_,
-           HAlign horizontalAlignment_)
+                            LetterCase letterCase_, VAlign verticalAlignment_,
+                            HAlign horizontalAlignment_)
     : content(content_),
       borderMask(borderMask_),
       letterCase(letterCase_),
       verticalAlignment(verticalAlignment_),
       horizontalAlignment(horizontalAlignment_) {}
 
-bool StaticTabulizer::Cell::hasBorder(Border border) const { return (borderMask & border) != 0; }
+bool StaticTabulizer::Cell::hasBorder(Border border) const {
+  return (borderMask & border) != 0;
+}
 
 StaticTabulizer::Cell& StaticTabulizer::Cell::operator=(const Cell& rhs) {
   if (this != &rhs) {
@@ -73,11 +75,16 @@ const std::string StaticTabulizer::Cell::getContent() const {
   return result;
 }
 
-VAlign StaticTabulizer::Cell::getVerticalAlignment() const { return verticalAlignment; }
+VAlign StaticTabulizer::Cell::getVerticalAlignment() const {
+  return verticalAlignment;
+}
 
-HAlign StaticTabulizer::Cell::getHorizontalAlignment() const { return horizontalAlignment; }
+HAlign StaticTabulizer::Cell::getHorizontalAlignment() const {
+  return horizontalAlignment;
+}
 
-StaticTabulizer::Cell::IntersectionMask StaticTabulizer::Cell::getIntersectionMask(Cell::Corner corner) const {
+StaticTabulizer::Cell::IntersectionMask
+StaticTabulizer::Cell::getIntersectionMask(Cell::Corner corner) const {
   IntersectionMask result = 0;
 
   switch (corner) {

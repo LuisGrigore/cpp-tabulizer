@@ -6,15 +6,15 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:49:32 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 05:12:33 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:14:33 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/StaticTabulizer.hpp"
 
 #include <algorithm>
 #include <cstring>
 #include <iostream>
-
-#include "../../include/StaticTabulizer.hpp"
 
 StaticTabulizer::StaticTabulizer()
     : maxCellWidth(10),
@@ -27,11 +27,9 @@ StaticTabulizer::StaticTabulizer()
   for (unsigned int c = 0; c < MAX_COLS; ++c) colWidths[c] = 1;
 }
 
-// Constructor con parámetros
 StaticTabulizer::StaticTabulizer(const unsigned int maxCellWidth_,
-                                           const unsigned int maxCellHeight_,
-                                           const bool flex_,
-                                           BorderStyle borderStyle_)
+                                 const unsigned int maxCellHeight_,
+                                 const bool flex_, BorderStyle borderStyle_)
     : maxCellWidth(maxCellWidth_),
       maxCellHeight(maxCellHeight_),
       flex(flex_),
@@ -42,7 +40,6 @@ StaticTabulizer::StaticTabulizer(const unsigned int maxCellWidth_,
   for (unsigned int c = 0; c < MAX_COLS; ++c) colWidths[c] = 1;
 }
 
-// Constructor de copia
 StaticTabulizer::StaticTabulizer(const StaticTabulizer& other)
     : maxCellWidth(other.maxCellWidth),
       maxCellHeight(other.maxCellHeight),
@@ -54,31 +51,20 @@ StaticTabulizer::StaticTabulizer(const StaticTabulizer& other)
     rowHeights[r] = other.rowHeights[r];
   for (unsigned int c = 0; c < MAX_COLS; ++c) colWidths[c] = other.colWidths[c];
 
-  // Copiar celdas
   for (unsigned int r = 0; r < MAX_ROWS; ++r)
-    for (unsigned int c = 0; c < MAX_COLS; ++c)
-      cells[r][c] = other.cells[r][c];  // Cell tiene constructor de copia
+    for (unsigned int c = 0; c < MAX_COLS; ++c) cells[r][c] = other.cells[r][c];
 }
 
-// Destructor
-StaticTabulizer::~StaticTabulizer() {
-  // Nada que liberar, todo es memoria estática
-}
+StaticTabulizer::~StaticTabulizer() {}
 
-/* ---------------- Métodos ---------------- */
-
-// Set cell
-void StaticTabulizer::setCell(
-    const unsigned int row, const unsigned int col, const std::string content,
-    const LetterCase letterCase, const HAlign horizontalAlignment,
-    const VAlign verticalAlignment, const BorderMask borderMask) {
+void StaticTabulizer::setCell(unsigned int row, unsigned int col,
+                              const std::string& content,
+                              const CellOptions& options) {
   if (row >= MAX_ROWS || col >= MAX_COLS) return;
 
-  // 1) Crear la celda primero
-  cells[row][col] = Cell(content, borderMask, letterCase, verticalAlignment,
-                         horizontalAlignment);
+  cells[row][col] = Cell(content, options.border, options.letterCase,
+                         options.vAlign, options.hAlign);
 
-  // 2) Calcular tamaño REAL a partir del contenido nuevo
   unsigned int cellWidth =
       std::min((unsigned int)content.length(), maxCellWidth);
 
@@ -86,13 +72,12 @@ void StaticTabulizer::setCell(
       (unsigned int)((content.length() + maxCellWidth - 1) / maxCellWidth),
       maxCellHeight);
 
-  // 3) Actualizar máximos
   if (colWidths[col] < cellWidth) colWidths[col] = cellWidth;
 
   if (rowHeights[row] < cellHeight) rowHeights[row] = cellHeight;
 
-  // 4) Actualizar dimensiones visibles
   if (row + 1 > nDisplayableRows) nDisplayableRows = row + 1;
+
   if (col + 1 > nDisplayableCols) nDisplayableCols = col + 1;
 }
 
@@ -107,7 +92,6 @@ void StaticTabulizer::display() {
 
   std::string buffer[nRowChars][nColChars + 1];
 
-  // 1) Inicializar buffer
   for (unsigned int r = 0; r < nRowChars; r++) {
     for (unsigned int c = 0; c < nColChars; c++) {
       buffer[r][c] = " ";
@@ -124,17 +108,15 @@ void StaticTabulizer::display() {
       unsigned int rowEnd = rowCellRef + rowHeights[row] + 1;
       unsigned int colEnd = colCellRef + colWidths[col] + 1;
 
-      // Esquinas
-      buffer[rowCellRef][colCellRef] =
-          getIntersectionChar(getCornerIntersectionMask(row, col, Cell::TOP_LEFT));
-      buffer[rowCellRef][colEnd] =
-          getIntersectionChar(getCornerIntersectionMask(row, col, Cell::TOP_RIGHT));
-      buffer[rowEnd][colCellRef] =
-          getIntersectionChar(getCornerIntersectionMask(row, col, Cell::BOTTOM_LEFT));
+      buffer[rowCellRef][colCellRef] = getIntersectionChar(
+          getCornerIntersectionMask(row, col, Cell::TOP_LEFT));
+      buffer[rowCellRef][colEnd] = getIntersectionChar(
+          getCornerIntersectionMask(row, col, Cell::TOP_RIGHT));
+      buffer[rowEnd][colCellRef] = getIntersectionChar(
+          getCornerIntersectionMask(row, col, Cell::BOTTOM_LEFT));
       buffer[rowEnd][colEnd] = getIntersectionChar(
           getCornerIntersectionMask(row, col, Cell::BOTTOM_RIGHT));
 
-      // Bordes horizontales
       for (unsigned int c = colCellRef + 1; c < colEnd; c++) {
         if (cells[row][col].hasBorder(BORDER_TOP))
           buffer[rowCellRef][c] = borderStyle.horizontal;
@@ -142,15 +124,12 @@ void StaticTabulizer::display() {
           buffer[rowEnd][c] = borderStyle.horizontal;
       }
 
-      // Bordes verticales
       for (unsigned int r = rowCellRef + 1; r < rowEnd; r++) {
         if (cells[row][col].hasBorder(BORDER_LEFT))
           buffer[r][colCellRef] = borderStyle.vertical;
         if (cells[row][col].hasBorder(BORDER_RIGHT))
           buffer[r][colEnd] = borderStyle.vertical;
       }
-
-      /* ================= CONTENIDO CON ALINEAMIENTO ================= */
 
       std::string text = cells[row][col].getContent();
 
@@ -161,7 +140,6 @@ void StaticTabulizer::display() {
           (unsigned int)((text.length() + cellInnerWidth - 1) / cellInnerWidth);
       if (textHeight > cellInnerHeight) textHeight = cellInnerHeight;
 
-      // Padding vertical
       unsigned int padTop = 0;
       if (cellInnerHeight > textHeight) {
         unsigned int freeSpace = cellInnerHeight - textHeight;
@@ -185,7 +163,6 @@ void StaticTabulizer::display() {
         unsigned int lineLen = cellInnerWidth;
         if (remaining < lineLen) lineLen = remaining;
 
-        // Padding horizontal
         unsigned int padLeft = 0;
         if (cellInnerWidth > lineLen) {
           unsigned int freeSpace = cellInnerWidth - lineLen;
@@ -216,15 +193,12 @@ void StaticTabulizer::display() {
         }
       }
 
-      /* =============================================================== */
-
       colCellRef = colEnd;
     }
 
     rowCellRef += rowHeights[row] + 1;
   }
 
-  // Imprimir buffer
   for (unsigned int r = 0; r < nRowChars; r++) {
     for (unsigned int c = 0; c <= nColChars; c++) {
       std::cout << buffer[r][c];

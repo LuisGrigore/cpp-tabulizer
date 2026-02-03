@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 17:57:14 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 05:08:23 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:11:26 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,11 @@ class StaticTabulizer : public ITabulizer {
   unsigned int nDisplayableCols;
 
   StaticTabulizer& operator=(const StaticTabulizer& rhs);
-  std::string getIntersectionChar(Cell::IntersectionMask intersectionMask) const;
-  Cell::IntersectionMask getCornerIntersectionMask(unsigned int row, unsigned int col,
-                                             Cell::Corner corner);
+  std::string getIntersectionChar(
+      Cell::IntersectionMask intersectionMask) const;
+  Cell::IntersectionMask getCornerIntersectionMask(unsigned int row,
+                                                   unsigned int col,
+                                                   Cell::Corner corner);
 
  public:
   StaticTabulizer();
@@ -77,11 +79,9 @@ class StaticTabulizer : public ITabulizer {
                   BorderStyle borderStyle);
   StaticTabulizer(const StaticTabulizer& other);
   virtual ~StaticTabulizer();
-  virtual void setCell(const unsigned int row, const unsigned int col,
-                       const std::string content, const LetterCase letterCase,
-                       const HAlign horizontalAlignment,
-                       const VAlign verticalAlignment,
-                       const BorderMask borderMask);
+  virtual void setCell(unsigned int row, unsigned int col,
+                       const std::string& content,
+                       const CellOptions& options = CellOptions());
   virtual void display();
 };
 

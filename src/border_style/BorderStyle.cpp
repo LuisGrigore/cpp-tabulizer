@@ -6,17 +6,18 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 04:18:17 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 04:47:35 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:12:03 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/BorderStyle.hpp"
 
-BorderStyle::BorderStyle(const char* horizontal, const char* vertical, const char* topLeft,
-                                   const char* topRight, const char* bottomLeft,
-                                   const char* bottomRight, const char* cross,
-                                   const char* rightT, const char* leftT,
-                                   const char* bottomT, const char* topT)
+BorderStyle::BorderStyle(const char* horizontal, const char* vertical,
+                         const char* topLeft, const char* topRight,
+                         const char* bottomLeft, const char* bottomRight,
+                         const char* cross, const char* rightT,
+                         const char* leftT, const char* bottomT,
+                         const char* topT)
     : horizontal(horizontal),
       vertical(vertical),
       topLeft(topLeft),
@@ -30,12 +31,10 @@ BorderStyle::BorderStyle(const char* horizontal, const char* vertical, const cha
       topT(topT) {}
 
 BorderStyle BorderStyle::ascii() {
-  return BorderStyle("-", "|", "+", "+", "+", "+", "+", "+", "+", "+",
-                          "+");
+  return BorderStyle("-", "|", "+", "+", "+", "+", "+", "+", "+", "+", "+");
 }
 BorderStyle BorderStyle::unicode() {
-  return BorderStyle("─", "│", "┌", "┐", "└", "┘", "┼", "┤", "├", "┬", "┴"
-                          );
+  return BorderStyle("─", "│", "┌", "┐", "└", "┘", "┼", "┤", "├", "┬", "┴");
 }
 BorderStyle BorderStyle::unicodeRounded() {
   return BorderStyle("─", "│", "╭", "╮", "╰", "╯", "┼", "┤", "├", "┬", "┴");

@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 04:29:41 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 05:08:41 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 14:11:51 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "BorderStyle.hpp"
 #include "ITabulizer.hpp"
-#include "TabulizerFactory.hpp"
 #include "StaticTabulizer.hpp"
+#include "TabulizerFactory.hpp"
 
 #endif
