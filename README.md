@@ -18,7 +18,7 @@ Compatible with **C++98**, making it suitable for legacy and modern environments
 
 ### Include source
 
-### 1. Execute this command inside your project directory
+1. Execute this command inside your project directory
 
 ```bash
 git clone https://github.com/LuisGrigore/cpp-tabulizer.git
@@ -27,13 +27,14 @@ cd cpp-tabulizer
 cd ..
 ```
 
-### 2. Link the library Makefile to your projects build system
+2. Link the library Makefile to your projects build system
 
-### 3. Link `build/lib/libtabulizer.a` in your project compilation
+3. Link `build/lib/libtabulizer.a` in your project compilation
+
 
 ### Built only
 
-### 1. Execute this command inside your project directory
+1. Execute this command inside your project directory
 
 ```bash
 git clone https://github.com/LuisGrigore/cpp-tabulizer.git
@@ -41,11 +42,12 @@ cd cpp-tabulizer
 ./tools/initializer/init.sh -build_only
 cd ..
 ```
-### 3. Link `build/lib/libtabulizer.a` in your project compilation
+2. Link `build/lib/libtabulizer.a` in your project compilation
+
 
 ### Python
 
-### Not yet supported
+Not yet supported
 
 ---
 
