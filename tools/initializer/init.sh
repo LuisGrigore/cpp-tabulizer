@@ -33,7 +33,7 @@ clean_except_include_build() {
     find . -mindepth 1 ! -regex './include\(/.*\)?' \
                      ! -regex './build\(/.*\)?' \
                      -exec rm -rf {} +
-	rm -rf ./build/obj/.*
+	rm -rf ./build/obj
 }
 
 case "$ARG" in
