@@ -58,7 +58,6 @@ int main() {
   table->setCell(3, 5, "76", row3Options);
 
   table->display();
-
   delete table;
   return 0;
 }

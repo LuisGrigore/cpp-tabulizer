@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/03 04:29:41 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 14:11:51 by lgrigore         ###   ########.fr       */
+/*   Created: 2026/02/03 15:13:29 by lgrigore          #+#    #+#             */
+/*   Updated: 2026/02/03 15:13:30 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,4 +18,4 @@
 #include "StaticTabulizer.hpp"
 #include "TabulizerFactory.hpp"
 
-#endif
+#endif  // TABULIZER_HPP

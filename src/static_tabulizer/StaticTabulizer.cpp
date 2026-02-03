@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:49:32 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 14:14:33 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/03 15:06:24 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,4 +204,18 @@ void StaticTabulizer::display() {
       std::cout << buffer[r][c];
     }
   }
+}
+
+void StaticTabulizer::clear() {
+  for (unsigned int r = 0; r < MAX_ROWS; r++) {
+    for (unsigned int c = 0; c < MAX_COLS; c++) {
+      cells[r][c] = Cell();
+    }
+    rowHeights[r] = 1;
+  }
+  for (unsigned int c = 0; c < MAX_COLS; c++) {
+    colWidths[c] = 1;
+  }
+  nDisplayableRows = 0;
+  nDisplayableCols = 0;
 }

@@ -5,19 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/02 17:57:14 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 14:11:26 by lgrigore         ###   ########.fr       */
+/*   Created: 2026/02/03 15:11:23 by lgrigore          #+#    #+#             */
+/*   Updated: 2026/02/03 15:12:25 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STATIC_TABULIZER_HPP
 #define STATIC_TABULIZER_HPP
 
+#include <string>
+
 #include "BorderStyle.hpp"
 #include "ITabulizer.hpp"
 
+/**
+ * @brief Static tabular table implementation
+ */
 class StaticTabulizer : public ITabulizer {
  private:
+  /**
+   * @brief Internal representation of a table cell
+   */
   class Cell {
    private:
     std::string content;
@@ -37,6 +45,7 @@ class StaticTabulizer : public ITabulizer {
       INTERSECTION_HAS_LEFT = 1 << 2,
       INTERSECTION_HAS_RIGHT = 1 << 3,
     };
+
     Cell();
     Cell(const Cell& other);
     ~Cell();
@@ -44,12 +53,14 @@ class StaticTabulizer : public ITabulizer {
          LetterCase letterCase, VAlign verticalAlignment,
          HAlign horizontalAlignment);
     Cell& operator=(const Cell& rhs);
+
     bool hasBorder(Border border) const;
     const std::string getContent() const;
     VAlign getVerticalAlignment() const;
     HAlign getHorizontalAlignment() const;
-    IntersectionMask getIntersectionMask(Cell::Corner corner) const;
+    IntersectionMask getIntersectionMask(Corner corner) const;
   };
+
   static const int MAX_CONTENT_SIZE = 64;
   static const int MAX_ROWS = 1024;
   static const int MAX_COLS = 10;
@@ -66,6 +77,7 @@ class StaticTabulizer : public ITabulizer {
   unsigned int nDisplayableCols;
 
   StaticTabulizer& operator=(const StaticTabulizer& rhs);
+
   std::string getIntersectionChar(
       Cell::IntersectionMask intersectionMask) const;
   Cell::IntersectionMask getCornerIntersectionMask(unsigned int row,
@@ -79,10 +91,24 @@ class StaticTabulizer : public ITabulizer {
                   BorderStyle borderStyle);
   StaticTabulizer(const StaticTabulizer& other);
   virtual ~StaticTabulizer();
+  /**
+   * @brief Set the content of a cell with options
+   * @param row Row index
+   * @param col Column index
+   * @param content Text content for the cell
+   * @param options Formatting options for the cell
+   */
   virtual void setCell(unsigned int row, unsigned int col,
                        const std::string& content,
                        const CellOptions& options = CellOptions());
+  /**
+   * @brief Render the table to the terminal
+   */
   virtual void display();
+  /**
+   * @brief Clear all cell contents and reset the table
+   */
+  virtual void clear();
 };
 
-#endif
+#endif  // STATIC_TABULIZER_HPP
