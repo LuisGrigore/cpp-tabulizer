@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:11:28 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 15:11:29 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:35:33 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ class ITabulizer {
   virtual void setCell(unsigned int row, unsigned int col,
                        const std::string& content,
                        const CellOptions& options = CellOptions()) = 0;
+  virtual void setCellMaxDimensions(unsigned int maxWidth,
+                                    unsigned int maxHeight) = 0;
 
   /**
    * @brief Render the table to the terminal

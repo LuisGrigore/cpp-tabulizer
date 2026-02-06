@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 15:11:23 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 15:12:25 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:37:10 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ class StaticTabulizer : public ITabulizer {
   static const int MAX_ROWS = 1024;
   static const int MAX_COLS = 10;
 
-  const unsigned int maxCellWidth;
-  const unsigned int maxCellHeight;
+  unsigned int maxCellWidth;
+  unsigned int maxCellHeight;
   const bool flex;
   const BorderStyle borderStyle;
 
@@ -101,6 +101,8 @@ class StaticTabulizer : public ITabulizer {
   virtual void setCell(unsigned int row, unsigned int col,
                        const std::string& content,
                        const CellOptions& options = CellOptions());
+  virtual void setCellMaxDimensions(unsigned int maxWidth,
+                                    unsigned int maxHeight);
   /**
    * @brief Render the table to the terminal
    */

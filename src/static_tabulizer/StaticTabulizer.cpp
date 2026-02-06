@@ -6,7 +6,7 @@
 /*   By: lgrigore <lgrigore@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 14:49:32 by lgrigore          #+#    #+#             */
-/*   Updated: 2026/02/03 15:06:24 by lgrigore         ###   ########.fr       */
+/*   Updated: 2026/02/06 16:36:58 by lgrigore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,4 +218,10 @@ void StaticTabulizer::clear() {
   }
   nDisplayableRows = 0;
   nDisplayableCols = 0;
+}
+
+void StaticTabulizer::setCellMaxDimensions(unsigned int maxWidth,
+                                           unsigned int maxHeight) {
+  maxCellHeight = maxHeight;
+  maxCellWidth = maxWidth;
 }
