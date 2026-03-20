@@ -1,12 +1,12 @@
 #include <string>
-
+#include <iostream>
 #include "BorderStyle.hpp"
 #include "ITabulizer.hpp"
 #include "TabulizerFactory.hpp"
 
 int main() {
   ITabulizer* table = TabulizerFactory::createStaticTabulizer(
-      20, 5, true, BorderStyle::unicodeDouble());
+      100, 5, true, BorderStyle::unicodeRounded());
 
   CellOptions headerOptions;
   headerOptions.letterCase = LETTER_CASE_ALL_UPPER;
